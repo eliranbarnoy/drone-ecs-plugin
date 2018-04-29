@@ -67,6 +67,17 @@ def register_task_definition():
                         'logDriver': pp('log_driver'),
                         'options': options_handler(pp('log_options'))
                     },
+                },
+                {
+                    'name': '{}-container'.format((pp('family'))),
+                    'image': '{}:{}'.format(pp('image_name2'), pp('image_tag2')),
+                    'memory': int(pp('memory2')),
+                    'portMappings': port_handler(pp('port_mappings2')),
+                    'environment': env_handler(pp('environment_variables2')),
+                    'logConfiguration': {
+                        'logDriver': pp('log_driver2'),
+                        'options': options_handler(pp('log_options2'))
+                    },
                 }
             ]
         )
@@ -100,6 +111,22 @@ def register_task_definition_dockersock():
                             'containerPath': '/var/run/docker.sock'
                         },
                     ],
+                },
+                {
+                    'name': '{}-container'.format((pp('family'))),
+                    'image': '{}:{}'.format(pp('image_name2'), pp('image_tag2')),
+                    'memory': int(pp('memory2')),
+                    'portMappings': port_handler(pp('port_mappings2')),
+                    'environment': env_handler(pp('environment_variables2')),
+                    'logConfiguration': {
+                        'logDriver': pp('log_driver2'),
+                        'options': options_handler(pp('log_options2'))
+                    },
+                    'mountPoints': [
+                        {
+                            'sourceVolume': 'dockersock',
+                            'containerPath': '/var/run/docker.sock'
+                        },
                 }
             ],
             volumes = [
