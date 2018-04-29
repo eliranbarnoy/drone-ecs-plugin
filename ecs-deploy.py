@@ -67,9 +67,12 @@ def register_task_definition():
                         'logDriver': pp('log_driver'),
                         'options': options_handler(pp('log_options'))
                     },
+                    "links": [
+                        '{}-container2'.format((pp('family'))):'{}-container2'.format((pp('family')))
+                    ],
                 },
                 {
-                    'name': '{}-container'.format((pp('family'))),
+                    'name': '{}-container2'.format((pp('family'))),
                     'image': '{}:{}'.format(pp('image_name2'), pp('image_tag2')),
                     'memory': int(pp('memory2')),
                     'portMappings': port_handler(pp('port_mappings2')),
@@ -78,6 +81,9 @@ def register_task_definition():
                         'logDriver': pp('log_driver2'),
                         'options': options_handler(pp('log_options2'))
                     },
+                    "links": [
+                        '{}-container'.format((pp('family'))):'{}-container'.format((pp('family')))
+                    ],
                 }
             ]
         )
