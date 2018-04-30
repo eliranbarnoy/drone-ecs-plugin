@@ -69,18 +69,18 @@ def register_task_definition():
                         'options': options_handler(pp('log_options'))
                     },
                     "links": [
-                        '{}-container2'.format((pp('family')))+":linked-container"
+                        '{}-container-linked'.format((pp('family')))+":"+pp('link-name')
                     ],
                 },
                 {
-                    'name': '{}-container2'.format((pp('family'))),
-                    'image': '{}:{}'.format(pp('image_name2'), pp('image_tag2')),
-                    'memory': int(pp('memory2')),
-                    'portMappings': port_handler(pp('port_mappings2')),
-                    'environment': env_handler(pp('environment_variables2')),
+                    'name': '{}-container-linked'.format((pp('family'))),
+                    'image': '{}:{}'.format(pp('image_name_linked'), pp('image_tag_linked')),
+                    'memory': int(pp('memory_linked')),
+                    'portMappings': port_handler(pp('port_mappings_linked')),
+                    'environment': env_handler(pp('environment_variables_linked')),
                     'logConfiguration': {
-                        'logDriver': pp('log_driver2'),
-                        'options': options_handler(pp('log_options2'))
+                        'logDriver': pp('log_driver_linked'),
+                        'options': options_handler(pp('log_options_linked'))
                     },
                 }
             ]
@@ -115,25 +115,25 @@ def register_task_definition_dockersock():
                             'containerPath': '/var/run/docker.sock'
                         },
                     ],
+                    "links": [
+                        '{}-container-linked'.format((pp('family')))+":"+pp('link-name')
+                    ],
                 },
                 {
                     'name': '{}-container'.format((pp('family'))),
-                    'image': '{}:{}'.format(pp('image_name2'), pp('image_tag2')),
-                    'memory': int(pp('memory2')),
-                    'portMappings': port_handler(pp('port_mappings2')),
-                    'environment': env_handler(pp('environment_variables2')),
+                    'image': '{}:{}'.format(pp('image_name_linked'), pp('image_tag_linked')),
+                    'memory': int(pp('memory_linked')),
+                    'portMappings': port_handler(pp('port_mappings_linked')),
+                    'environment': env_handler(pp('environment_variables_linked')),
                     'logConfiguration': {
-                        'logDriver': pp('log_driver2'),
-                        'options': options_handler(pp('log_options2'))
+                        'logDriver': pp('log_driver_linked'),
+                        'options': options_handler(pp('log_options_linked'))
                     },
                     'mountPoints': [
                         {
                             'sourceVolume': 'dockersock',
                             'containerPath': '/var/run/docker.sock'
                         }
-                    ],
-                    "links": [
-                        '{}-container'.format((pp('family')))+":"+'{}-container'.format((pp('family')))
                     ],
                 }
              ],
