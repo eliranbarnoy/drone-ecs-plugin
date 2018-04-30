@@ -7,6 +7,7 @@ def pp(name):
     # pp as in plugin parameter 
     param = os.environ.get('{}_{}'.format('PLUGIN', name.upper()))
     if param:
+        print param
         return param
     else:
         print 'No such variable {}'.format(name)
@@ -67,9 +68,6 @@ def register_task_definition():
                         'logDriver': pp('log_driver'),
                         'options': options_handler(pp('log_options'))
                     },
-                    "links": [
-                        '{}-container2'.format((pp('family'))):'{}-container2'.format((pp('family')))
-                    ],
                 },
                 {
                     'name': '{}-container2'.format((pp('family'))),
@@ -82,7 +80,7 @@ def register_task_definition():
                         'options': options_handler(pp('log_options2'))
                     },
                     "links": [
-                        '{}-container'.format((pp('family'))):'{}-container'.format((pp('family')))
+                        '{}-container'.format((pp('family')))+":"+'{}-container'.format((pp('family')))
                     ],
                 }
             ]
@@ -132,9 +130,13 @@ def register_task_definition_dockersock():
                         {
                             'sourceVolume': 'dockersock',
                             'containerPath': '/var/run/docker.sock'
-                        },
+                        }
+                    ],
+                    "links": [
+                        '{}-container'.format((pp('family')))+":"+'{}-container'.format((pp('family')))
+                    ],
                 }
-            ],
+             ],
             volumes = [
                 {
                     'name': 'dockersock',
