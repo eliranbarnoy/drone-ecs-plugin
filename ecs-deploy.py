@@ -68,6 +68,9 @@ def register_task_definition():
                         'logDriver': pp('log_driver'),
                         'options': options_handler(pp('log_options'))
                     },
+                    "links": [
+                        '{}-container2'.format((pp('family')))+":linked-container"
+                    ],
                 },
                 {
                     'name': '{}-container2'.format((pp('family'))),
@@ -79,9 +82,6 @@ def register_task_definition():
                         'logDriver': pp('log_driver2'),
                         'options': options_handler(pp('log_options2'))
                     },
-                    "links": [
-                        '{}-container'.format((pp('family')))+":"+'{}-container'.format((pp('family')))
-                    ],
                 }
             ]
         )
