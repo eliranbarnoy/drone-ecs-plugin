@@ -16,7 +16,7 @@ image:
     image_name_linked: reg.company.com/image
     image_tag: ${DRONE_BUILD_NUMBER}
     image_tag_linked: ${DRONE_BUILD_NUMBER}
-	link_name: my-linked-service
+    link_name: my-linked-service
     environment_variables:
       - BRANCH=${DRONE_BRANCH}
       - SHA1=${DRONE_COMMIT_SHA}
